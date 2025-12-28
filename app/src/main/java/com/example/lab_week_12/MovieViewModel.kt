@@ -24,11 +24,13 @@ class MovieViewModel(private val movieRepository: MovieRepository) : ViewModel()
 
     private fun fetchPopularMovies() {
         viewModelScope.launch(Dispatchers.IO) {
+
             movieRepository.fetchMovies()
                 .catch { e ->
                     _error.value = "An exception occurred: ${e.message}"
                 }
                 .collect { movies ->
+
                     val currentYear = Calendar.getInstance().get(Calendar.YEAR).toString()
 
                     val filteredMovies = movies
